@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Django - Barra Lateral</title>
+   {% load static %}  <!-- Carregar a tag static -->
+
+   <style>
+       body {
+           margin: 0;
+           font-family: Arial, sans-serif;
+           display: flex;
+           height: 100vh;
+           overflow: hidden;
+       }
+
+       /* Barra lateral */
+       .sidebar {
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 60px; /* Largura inicial estreita */
+           height: 100%;
+           background-color: #2c3e50;
+           color: #ecf0f1;
+           overflow-x: hidden;
+           transition: width 0.3s ease-in-out; /* Animação ao expandir */
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           cursor: pointer;
+       }
+
+       /* Barra lateral expandida */
+       .sidebar.expanded {
+           width: 250px; /* Largura expandida */
+       }
+
+       .menu-icon {
+           margin: 10px;
+           width: 40px; /* Tamanho do ícone do menu */
+           cursor: pointer;
+       }
+
+       .sidebar h2 {
+           display: none;
+           margin-top: 20px;
+       }
+
+       .sidebar.expanded h2 {
+           display: block; /* Mostrar título ao expandir */
+       }
+
+       .sidebar a {
+           text-decoration: none;
+           color: #ecf0f1;
+           padding: 10px 20px;
+           width: 100%;
+           text-align: center;
+           transition: background 0.3s;
+           border-radius: 5px;
+           display: none; /* Esconder links inicialmente */
+       }
+
+       .sidebar.expanded a {
+           display: block; /* Mostrar links ao expandir */
+       }
+
+       .sidebar a:hover {
+           background-color: #34495e;
+       }
+
+       /* Conteúdo principal */
+       .content {
+           margin-left: 60px; /* Espaço para a barra estreita */
+           padding: 20px;
+           flex: 1;
+           background-color: #ecf0f1;
+           transition: margin-left 0.3s ease-in-out;
+       }
+
+       .sidebar.expanded ~ .content {
+           margin-left: 250px; /* Ajustar margem ao expandir */
+       }
+   </style>
+</head>
+<body>
+   <div class="sidebar" id="sidebar">
+       <img src="{% static 'images/menu.png' %}" alt="Menu" class="menu-icon" id="menuIcon">
+       <h2>Meu Site</h2>
+       <a href="#">Início</a>
+       <a href="#">Sobre</a>
+       <a href="#">Serviços</a>
+       <a href="#">Contato</a>
+   </div>
+   <div class="content">
+       <h1>Bem-vindo!</h1>
+       <p>Esta é uma tela inicial moderna com uma barra lateral que expande quando você passa o mouse ou toca no ícone no dispositivo móvel.</p>
+   </div>
+
+   <script>
+       const sidebar = document.getElementById('sidebar');
+       const menuIcon = document.getElementById('menuIcon');
+
+       // Toggle a classe "expanded" ao clicar no ícone
+       menuIcon.addEventListener('click', () => {
+           sidebar.classList.toggle('expanded');
+       });
+
+       // Para dispositivos móveis, ao tocar no ícone
+       sidebar.addEventListener('touchstart', () => {
+           sidebar.classList.toggle('expanded');
+       });
+   </script>
+</body>
+</html>
